@@ -1,0 +1,238 @@
+TRUNCATE TABLE LMS_ICOLLEGE_RUBRIC_PROG;
+INSERT INTO LMS_ICOLLEGE_RUBRIC_PROG
+  (
+    PIDM,
+    BUILD_ORGUNITID,
+    BUILD_COURSE_NAME,
+    BUILD_COURSE_CODE,
+    ORGUNIT_TYPE,
+    RUBRICID,
+    RUBRIC_NAME,
+    ORGUNITID,
+    ICOLLEGE_COURSE_NAME,
+    ICOLLEGE_COURSE_CODE,
+    ASS_BOR_TERM,
+    GSU_TERM,
+    CRN,
+    CRS_XLS_CODE,
+    ICOLLEGE_USERNAME,
+    ICOLLEGE_FIRSTNAME,
+    ICOLLEGE_MIDDLENAME,
+    ICOLLEGE_LASTNAME,
+    ICOLLEGE_EMAIL,
+    ICOLLEGE_USERID,
+    RUBRIC_LEVELNAME,
+    ASSESSMENTID,
+    ASSESSMENTDATE,
+    RUBRIC_ACTIVITYTYPE,
+    TOTAL_RUBRIC_SCORE,
+    RUBRIC_LEVELACHIEVEDID,
+    CRITERION_NAME,
+    CRITERIONLEVELNAME,
+    CRITERIONID,
+    CRITERION_SCORE,
+    CRITERION_LEVELACHIEVEDID,
+    CRITERION_LEVELDESCRIPTION,
+    CRITERION_FEEDBACK
+  )
+SELECT
+  UserAccount.SisPIDM as PIDM,
+  ProgramDept.OrgUnitId AS BUILD_ORGUNITID,
+  ProgramDept.Name AS BUILD_COURSE_NAME,
+  ProgramDept.Code AS BUILD_COURSE_CODE,
+  ProgramDept.Type AS ORGUNIT_TYPE,
+  RubricObject.RubricId AS RUBRICID,
+  RubricObject.Name AS RUBRIC_NAME,
+  CourseOffering.OrgUnitId AS ORGUNITID,
+  CourseOffering.Name AS ICOLLEGE_COURSE_NAME,
+  CourseOffering.Code AS ICOLLEGE_COURSE_CODE,
+  Semester.Code AS ASS_BOR_TERM,
+  CourseOffering.SisTermCode AS GSU_TERM,
+  nvl(CourseOffering.SisCrn, (
+    SELECT
+      min(Section.SisCRN)
+    FROM
+      D2L_ORGANIZATIONAL_UNIT_ANCESTOR OrgUnitAncestor,
+      D2L_USER_ENROLLMENT UserEnrollment,
+      D2L_ORGANIZATIONAL_UNIT Section
+    WHERE
+      OrgUnitAncestor.AncestorOrgUnitId = CourseOffering.OrgUnitId and
+      OrgUnitAncestor.OrgUnitType = 'Section' and
+      UserEnrollment.OrgUnitId = OrgUnitAncestor.OrgUnitId and
+      UserEnrollment.UserId = UserAccount.UserId and
+      UserEnrollment.RoleName = 'Student' and
+      Section.OrgUnitId = OrgUnitAncestor.OrgUnitId
+  )) AS CRN,
+  CourseOffering.SisXlsCode AS CRS_XLS_CODE,
+  UserAccount.UserName AS ICOLLEGE_USERNAME,
+  UserAccount.FirstName AS ICOLLEGE_FIRSTNAME,
+  UserAccount.MiddleName AS ICOLLEGE_MIDDLENAME,
+  UserAccount.LastName AS ICOLLEGE_LASTNAME,
+  UserAccount.ExternalEmail AS ICOLLEGE_EMAIL,
+  UserAccount.UserId AS ICOLLEGE_USERID,
+  RubricLevel.Name AS RUBRIC_LEVELNAME,
+  RubricAssessment.AssessmentId AS ASSESSMENTID,
+  RubricAssessment.AssessmentDate AS ASSESSMENTDATE,
+  RubricAssessment.ActivityType AS RUBRIC_ACTIVITYTYPE,
+  RubricAssessment.Score AS TOTAL_RUBRIC_SCORE,
+  RubricAssessment.LevelAchievedId AS RUBRIC_LEVELACHIEVEDID,
+  RubricObjectCriteria.Name AS CRITERION_NAME,
+  CriteriaLevel.Name AS CRITERIONLEVELNAME,
+  RubricAssessmentCriteria.CriterionId AS CRITERIONID,
+  RubricAssessmentCriteria.Score AS CRITERION_SCORE,
+  RubricAssessmentCriteria.LevelAchievedId AS CRITERION_LEVELACHIEVEDID,
+  (
+    SELECT
+      min(RubricCriteriaLevel.Description)
+    FROM
+      D2L_RUBRIC_CRITERIA_LEVEL RubricCriteriaLevel
+    WHERE
+      RubricCriteriaLevel.RubricId = RubricAssessmentCriteria.RubricId AND
+      RubricCriteriaLevel.CriterionId = RubricAssessmentCriteria.CriterionId AND
+      RubricCriteriaLevel.LevelId = RubricAssessmentCriteria.LevelAchievedId
+  ) AS CRITERION_LEVELDESCRIPTION,
+  RubricAssessmentCriteria.Feedback AS CRITERION_FEEDBACK
+FROM
+  LMS_RUBRIC_PROGRAM ProgramDept,
+  D2L_RUBRIC_OBJECT RubricObject,
+  D2L_RUBRIC_ASSESSMENT RubricAssessment,
+  D2L_RUBRIC_ASSESSMENT_CRITERIA RubricAssessmentCriteria,
+  (
+    SELECT
+      *
+    FROM
+      D2L_ORGANIZATIONAL_UNIT CourseOfferingOU
+    WHERE
+      CourseOfferingOU.IsDeleted = 0 AND
+      CourseOfferingOU.Type = 'Course Offering'
+  ) CourseOffering,
+  D2L_ORGANIZATIONAL_UNIT Semester,
+  D2L_USER UserAccount,
+  D2L_RUBRIC_OBJECT_LEVELS RubricLevel,
+  D2L_RUBRIC_OBJECT_CRITERIA RubricObjectCriteria,
+  D2L_RUBRIC_OBJECT_LEVELS CriteriaLevel
+WHERE
+  -- RubricObject
+  RubricObject.OrgUnitId = ProgramDept.OrgUnitId AND
+  -- RubricAssessment
+  RubricAssessment.RubricId = RubricObject.RubricId AND
+  -- RubricAssessmentCriteria
+  RubricAssessmentCriteria.UserId = RubricAssessment.UserId AND
+  RubricAssessmentCriteria.AssessmentId = RubricAssessment.AssessmentId AND
+  -- CourseOffering
+  CourseOffering.OrgUnitId = RubricAssessment.OrgUnitId AND
+  -- Semester
+  Semester.OrgUnitId = CourseOffering.SemesterId AND
+  -- UserAccount
+  UserAccount.UserId = RubricAssessment.UserId AND
+  UserAccount.ExternalEmail NOT LIKE 'demo.%@student.gsu.edu' AND
+  -- RubricLevel
+  RubricLevel.LevelId = RubricAssessment.LevelAchievedId AND
+  -- RubricObjectCriteria
+  RubricObjectCriteria.CriterionId = RubricAssessmentCriteria.CriterionId AND
+  -- CriteriaLevel
+  CriteriaLevel.LevelId = RubricAssessmentCriteria.LevelAchievedId
+;
+
+
+MERGE INTO
+  LMS_ICOLLEGE_RUBRIC_PROG A
+USING
+  (
+    SELECT
+      SPRIDEN_PIDM AS PIDM,              
+      SPRIDEN_ID AS PANTHERID,
+      SGBSTDN_TERM_CODE_EFF AS STU_ENROLLED_TERM,
+      SGBSTDN_COLL_CODE_1 AS STU_COLG,
+      SGBSTDN_DEPT_CODE AS STU_DEPT,
+      SGBSTDN_DEGC_CODE_1 AS STU_DEGR,
+      SGBSTDN_MAJR_CODE_1 AS STU_MAJR,
+      SGBSTDN_MAJR_CODE_CONC_1 AS STU_CONCENT,
+      SGBSTDN_PROGRAM_1 AS STU_PROG,
+      STU_LEVEL_REGENTS AS STU_LEVEL_REGENTS,
+      SGBSTDN_LEVL_CODE AS STU_LEVEL,
+      SGBSTDN_STYP_CODE AS STU_TYPE,
+      SGBSTDN_CAMP_CODE AS STU_PRIME_CAMP,
+      SPBPERS_SEX AS STU_SEX,
+      GORPRAC_RACE_CDE AS STU_RACE,
+      SPBPERS_ETHN_CODE AS STU_ETHNICITY,
+      SPBPERS_AGE AS STU_AGE,
+      (SELECT STVCODE_DESC FROM BNR_STVCODE WHERE STVCODE_TABLE = 'STVCOLL' AND STVCODE_CODE = SGBSTDN_COLL_CODE_1) AS COLG_DESC,
+      (SELECT STVCODE_DESC FROM BNR_STVCODE WHERE STVCODE_TABLE = 'STVDEPT' AND STVCODE_CODE = SGBSTDN_DEPT_CODE) AS DEPT_DESC,
+      (SELECT STVCODE_DESC FROM BNR_STVCODE WHERE STVCODE_TABLE = 'STVDEGC' AND STVCODE_CODE = SGBSTDN_DEGC_CODE_1) AS DEGR_DESC,
+      (SELECT STVCODE_DESC FROM BNR_STVCODE WHERE STVCODE_TABLE = 'STVMAJR' AND STVCODE_CODE = SGBSTDN_MAJR_CODE_1) AS MAJR_DESC,
+      (SELECT STVCODE_DESC FROM BNR_STVCODE WHERE STVCODE_TABLE = 'STVMAJR' AND STVCODE_CODE = SGBSTDN_MAJR_CODE_CONC_1) AS CONCENT_DESC,
+      (SELECT STVCODE_DESC FROM BNR_STVCODE WHERE STVCODE_TABLE = 'USGRGNT' AND STVCODE_CODE = STU_LEVEL_REGENTS) AS LEVEL_REGENTS_DESC,
+      (SELECT STVCODE_DESC FROM BNR_STVCODE WHERE STVCODE_TABLE = 'STVLEVL' AND STVCODE_CODE = SGBSTDN_LEVL_CODE) AS STU_LEVEL_DESC,
+      (SELECT STVCODE_DESC FROM BNR_STVCODE WHERE STVCODE_TABLE = 'STVSTYP' AND STVCODE_CODE = SGBSTDN_STYP_CODE) AS STU_TYPE_DESC,
+      (SELECT STVCODE_DESC FROM BNR_STVCODE WHERE STVCODE_TABLE = 'STVCAMP' AND STVCODE_CODE = SGBSTDN_STYP_CODE) AS PRIME_CAMP_DESC,
+      GORRACE_DESC AS STU_RACE_DESC
+    FROM
+      BNR_SGBSTDN,
+      BNR_GORPRAC
+    WHERE
+      GORPRAC_PIDM(+) = SPRIDEN_PIDM
+  ) B
+ON
+  (A.PIDM = B.PIDM)
+WHEN MATCHED THEN
+  UPDATE SET
+    A.PANTHERID            = B.PANTHERID,
+    A.WHKEY                = B.PANTHERID,
+    A.STU_ENROLLED_TERM    = B.STU_ENROLLED_TERM,
+    A.STU_COLG             = B.STU_COLG,
+    A.COLG_DESC            = B.COLG_DESC,
+    A.STU_DEPT             = B.STU_DEPT,
+    A.DEPT_DESC            = B.DEPT_DESC,
+    A.STU_DEGR             = B.STU_DEGR,
+    A.DEGR_DESC            = B.DEGR_DESC,
+    A.STU_MAJR             = B.STU_MAJR,
+    A.MAJR_DESC            = B.MAJR_DESC,
+    A.STU_CONCENT          = B.STU_CONCENT,
+    A.CONCENT_DESC         = B.CONCENT_DESC,
+    A.STU_PROG             = B.STU_PROG,
+    A.STU_LEVEL_REGENTS    = B.STU_LEVEL_REGENTS,
+    A.LEVEL_REGENTS_DESC   = B.LEVEL_REGENTS_DESC,
+    A.STU_LEVEL            = B.STU_LEVEL,
+    A.STU_LEVEL_DESC       = B.STU_LEVEL_DESC,
+    A.STU_TYPE             = B.STU_TYPE,
+    A.STU_TYPE_DESC        = B.STU_TYPE_DESC,
+    A.STU_PRIME_CAMP       = B.STU_PRIME_CAMP,
+    A.PRIME_CAMP_DESC      = B.PRIME_CAMP_DESC,
+    A.STU_SEX              = B.STU_SEX,
+    A.STU_RACE             = B.STU_RACE,
+    A.STU_RACE_DESC        = B.STU_RACE_DESC,
+    A.STU_ETHNICITY        = B.STU_ETHNICITY,
+    A.STU_AGE              = B.STU_AGE
+  WHERE
+    NVL(A.PANTHERID, 0) != NVL(B.PANTHERID, 0) OR
+    NVL(A.STU_ENROLLED_TERM, 0) != NVL(B.STU_ENROLLED_TERM, 0) OR
+    NVL(A.STU_COLG, 0) != NVL(B.STU_COLG, 0) OR
+    NVL(A.COLG_DESC, 0) != NVL(B.COLG_DESC, 0) OR
+    NVL(A.STU_DEPT, 0) != NVL(B.STU_DEPT, 0) OR
+    NVL(A.DEPT_DESC, 0) != NVL(B.DEPT_DESC, 0) OR
+    NVL(A.STU_DEGR, 0) != NVL(B.STU_DEGR, 0) OR
+    NVL(A.DEGR_DESC, 0) != NVL(B.DEGR_DESC, 0) OR
+    NVL(A.STU_MAJR, 0) != NVL(B.STU_MAJR, 0) OR
+    NVL(A.MAJR_DESC, 0) != NVL(B.MAJR_DESC, 0) OR
+    NVL(A.STU_CONCENT, 0) != NVL(B.STU_CONCENT, 0) OR
+    NVL(A.CONCENT_DESC, 0) != NVL(B.CONCENT_DESC, 0) OR
+    NVL(A.STU_PROG, 0) != NVL(B.STU_PROG, 0) OR
+    NVL(A.STU_LEVEL_REGENTS, 0) != NVL(B.STU_LEVEL_REGENTS, 0) OR
+    NVL(A.LEVEL_REGENTS_DESC, 0) != NVL(B.LEVEL_REGENTS_DESC, 0) OR
+    NVL(A.STU_LEVEL, 0) != NVL(B.STU_LEVEL, 0) OR
+    NVL(A.STU_LEVEL_DESC, 0) != NVL(B.STU_LEVEL_DESC, 0) OR
+    NVL(A.STU_TYPE, 0) != NVL(B.STU_TYPE, 0) OR
+    NVL(A.STU_TYPE_DESC, 0) != NVL(B.STU_TYPE_DESC, 0) OR
+    NVL(A.STU_PRIME_CAMP, 0) != NVL(B.STU_PRIME_CAMP, 0) OR
+    NVL(A.PRIME_CAMP_DESC, 0) != NVL(B.PRIME_CAMP_DESC, 0) OR
+    NVL(A.STU_SEX, 0) != NVL(B.STU_SEX, 0) OR
+    NVL(A.STU_RACE, 0) != NVL(B.STU_RACE, 0) OR
+    NVL(A.STU_RACE_DESC, 0) != NVL(B.STU_RACE_DESC, 0) OR
+    NVL(A.STU_ETHNICITY, 0) != NVL(B.STU_ETHNICITY, 0) OR
+    NVL(A.STU_AGE, 0) != NVL(B.STU_AGE, 0)
+;
+
+COMMIT;
+
+QUIT;
