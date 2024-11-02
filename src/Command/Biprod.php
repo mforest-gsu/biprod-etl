@@ -5,34 +5,22 @@ declare(strict_types=1);
 namespace Gsu\Biprod\Command;
 
 use Gadget\Console\Command\ShellCommand;
+use Gadget\Console\Shell\ProcessShellEnv;
+use Gsu\Biprod\Factory\CommandArgFactory;
 
 abstract class Biprod extends ShellCommand
 {
-    /** @var string */
-    protected const CONSOLE = './bin/console';
-    /** @var string */
-    protected const ETL_DIR = './src/ETL/';
-    /** @var string */
-    protected const DAT_DIR = './var/sqlldr/';
-
-
     /**
-     * @param string $parFile
-     * @param string $datFile
-     * @return string[]
+     * @param ProcessShellEnv $shellEnv
+     * @param bool $throwOnError
+     * @param string|null $name
      */
-    protected function sqlldr(string $parFile, string $datFile): array
-    {
-        return [self::CONSOLE, 'oracle:sqlldr', self::ETL_DIR . $parFile, self::DAT_DIR . $datFile];
-    }
-
-
-    /**
-     * @param string $sqlFile
-     * @return string[]
-     */
-    protected function sqlplus(string $sqlFile): array
-    {
-        return [self::CONSOLE, 'oracle:sqlplus', self::ETL_DIR . $sqlFile];
+    public function __construct(
+        protected CommandArgFactory $argFactory,
+        ProcessShellEnv $shellEnv,
+        bool $throwOnError = true,
+        string|null $name = null
+    ) {
+        parent::__construct($shellEnv, $throwOnError, $name);
     }
 }

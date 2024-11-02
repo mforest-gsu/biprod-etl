@@ -14,10 +14,10 @@ final class Skill extends Biprod
     protected function getShellArgs(InputInterface $input): array
     {
         return [
-            $this->sqlplus('SKILL_OWNER.sql'),
-            $this->sqlplus('SKILL_LEVEL.sql'),
-            $this->sqlplus('SKILL_DETAIL.sql'),
-            $this->sqlplus('SKILL_ASSESSMENT.sql'),
+            $this->argFactory->sqlplus('SKILL_OWNER.sql'),
+            $this->argFactory->sqlplus('SKILL_LEVEL.sql'),
+            $this->argFactory->sqlplus('SKILL_DETAIL.sql'),
+            $this->argFactory->sqlplus('SKILL_ASSESSMENT.sql'),
         ];
     }
 }

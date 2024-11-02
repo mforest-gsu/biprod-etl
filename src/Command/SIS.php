@@ -14,12 +14,12 @@ final class SIS extends Biprod
     protected function getShellArgs(InputInterface $input): array
     {
         return [
-           $this->sqlplus('SISTERM.sql'),
-           $this->sqlplus('SISSECT.sql'),
-           $this->sqlplus('SISUSER.sql'),
-           $this->sqlplus('BNR_STVCODE.sql'),
-           $this->sqlplus('BNR_GORPRAC.sql'),
-           $this->sqlplus('BNR_SGBSTDN.sql'),
+           $this->argFactory->sqlplus('SISTERM.sql'),
+           $this->argFactory->sqlplus('SISSECT.sql'),
+           $this->argFactory->sqlplus('SISUSER.sql'),
+           $this->argFactory->sqlplus('BNR_STVCODE.sql'),
+           $this->argFactory->sqlplus('BNR_GORPRAC.sql'),
+           $this->argFactory->sqlplus('BNR_SGBSTDN.sql'),
         ];
     }
 }
