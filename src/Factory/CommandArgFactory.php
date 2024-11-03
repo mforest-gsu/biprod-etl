@@ -14,9 +14,9 @@ final class CommandArgFactory
      */
     public function __construct(
         private string $console = "./bin/console",
-        private string $parDir = "./src/ETL",
-        private string $dataDir = "./var/sqlldr",
-        private string $sqlDir = "./src/ETL"
+        private string $parDir = "./src/ETL/",
+        private string $dataDir = "./var/sqlldr/",
+        private string $sqlDir = "./src/ETL/"
     ) {
     }
 
@@ -53,15 +53,17 @@ final class CommandArgFactory
 
     /**
      * @param string $command
-     * @param string[] $params
+     * @param string $params
      * @return string[]
      */
-    public function console(string $command, ...$params): array
-    {
+    public function console(
+        string $command,
+        ...$params
+    ): array {
         return [
             $this->console,
             $command,
-            ...array_merge([], ...$params)
+            ...$params
         ];
     }
 
