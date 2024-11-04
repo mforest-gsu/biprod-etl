@@ -14,6 +14,7 @@
     "mjfk23/gadget-console": "^1.0",
     "mjfk23/gadget-http": "^1.0",
     "mjfk23/gadget-ldap": "^1.0",
+    "mjfk23/gadget-oracle": "^1.0",
     "paragonie/sodium_compat": "^2.1",
     "php-http/discovery": "^1.19",
     "symfony/console": "6.4.*",
