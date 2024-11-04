@@ -13,9 +13,9 @@ final class LMS extends Biprod
     /** @inheritdoc */
     protected function getShellArgs(InputInterface $input): array
     {
-        return [
-            $this->argFactory->sqlplus('LMSENRL.sql'),
-            $this->argFactory->sqlplus('LMS_ICOLLEGE_RUBRIC_PROG.sql'),
-        ];
+        return array_map($this->shellCmd->sqlplus(...), [
+            'LMSENRL.sql',
+            'LMS_ICOLLEGE_RUBRIC_PROG.sql',
+        ]);
     }
 }

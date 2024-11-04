@@ -13,12 +13,12 @@ final class D2L extends Biprod
     /** @inheritdoc */
     protected function getShellArgs(InputInterface $input): array
     {
-        return [
-            $this->argFactory->sqlplus('D2L_ORGANIZATIONAL_UNIT_ANCESTOR.sql'),
-            $this->argFactory->sqlplus('D2L_ORGANIZATIONAL_UNIT.sql'),
-            $this->argFactory->sqlplus('D2L_USER_ENROLLMENT.sql'),
-            $this->argFactory->sqlplus('D2L_USER.sql'),
-            $this->argFactory->sqlplus('D2L_OUTCOME_DETAIL.sql'),
-        ];
+        return array_map($this->shellCmd->sqlplus(...), [
+            'D2L_ORGANIZATIONAL_UNIT_ANCESTOR.sql',
+            'D2L_ORGANIZATIONAL_UNIT.sql',
+            'D2L_USER_ENROLLMENT.sql',
+            'D2L_USER.sql',
+            'D2L_OUTCOME_DETAIL.sql',
+        ]);
     }
 }

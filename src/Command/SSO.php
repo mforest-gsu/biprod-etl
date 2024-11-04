@@ -14,15 +14,9 @@ final class SSO extends Biprod
     protected function getShellArgs(InputInterface $input): array
     {
         return [
-            $this->argFactory->console(
-                'biprod:create-ssouser-file',
-                $this->argFactory->dataFile('SSOUSER.dat')
-            ),
-            $this->argFactory->sqlldr(
-                'SSOUSER.par',
-                'SSOUSER.dat'
-            ),
-            $this->argFactory->sqlplus('SSOUSER.sql')
+            $this->shellCmd->createSSOUserFile('SSOUSER.dat'),
+            $this->shellCmd->sqlldr('SSOUSER.par', 'SSOUSER.dat'),
+            $this->shellCmd->sqlplus('SSOUSER.sql')
         ];
     }
 }

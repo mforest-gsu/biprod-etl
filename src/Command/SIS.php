@@ -13,13 +13,13 @@ final class SIS extends Biprod
     /** @inheritdoc */
     protected function getShellArgs(InputInterface $input): array
     {
-        return [
-           $this->argFactory->sqlplus('SISTERM.sql'),
-           $this->argFactory->sqlplus('SISSECT.sql'),
-           $this->argFactory->sqlplus('SISUSER.sql'),
-           $this->argFactory->sqlplus('BNR_STVCODE.sql'),
-           $this->argFactory->sqlplus('BNR_GORPRAC.sql'),
-           $this->argFactory->sqlplus('BNR_SGBSTDN.sql'),
-        ];
+        return array_map($this->shellCmd->sqlplus(...), [
+           'SISTERM.sql',
+           'SISSECT.sql',
+           'SISUSER.sql',
+           'BNR_STVCODE.sql',
+           'BNR_GORPRAC.sql',
+           'BNR_SGBSTDN.sql',
+        ]);
     }
 }
