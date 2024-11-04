@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "80e057a4a74af04d573e44081ee4f190",
+    "content-hash": "80433d835b30ea069992f04dbaae169e",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -675,11 +675,17 @@
         },
         {
             "name": "mjfk23/gadget-oracle",
-            "version": "dev-main",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mjfk23/gadget-oracle.git",
+                "reference": "db5cf95e1b788248dc40abc8553693f0b0214255"
+            },
             "dist": {
-                "type": "path",
-                "url": "../../mjfk23/gadget-oracle",
-                "reference": "51720054ee981ff96029e66b49b5786d5a0c62ca"
+                "type": "zip",
+                "url": "https://api.github.com/repos/mjfk23/gadget-oracle/zipball/db5cf95e1b788248dc40abc8553693f0b0214255",
+                "reference": "db5cf95e1b788248dc40abc8553693f0b0214255",
+                "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
@@ -699,18 +705,7 @@
                     "Gadget\\Oracle\\": "src/"
                 }
             },
-            "scripts": {
-                "phpcs": [
-                    "vendor/bin/phpcs"
-                ],
-                "phpstan": [
-                    "vendor/bin/phpstan analyse -c phpstan.neon"
-                ],
-                "start": [
-                    "Composer\\Config::disableProcessTimeout",
-                    "@php -S localhost:8080 -t public"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -724,13 +719,10 @@
             "homepage": "https://github.com/mjfk23/gadget-oracle",
             "support": {
                 "issues": "https://github.com/mjfk23/gadget-oracle/issues",
-                "wiki": "https://github.com/mjfk23/gadget-oracle/wiki",
-                "source": "https://github.com/mjfk23/gadget-oracle"
+                "source": "https://github.com/mjfk23/gadget-oracle",
+                "wiki": "https://github.com/mjfk23/gadget-oracle/wiki"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "time": "2024-11-04T18:26:20+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5885,10 +5877,8 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "mjfk23/gadget-oracle": 20
-    },
-    "prefer-stable": false,
+    "stability-flags": [],
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.1",
