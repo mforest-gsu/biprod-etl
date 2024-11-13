@@ -6,7 +6,7 @@ namespace Gsu\Biprod\Factory;
 
 use Gadget\Factory\AbstractFactory;
 use Gadget\Io\Cast;
-use Gadget\LDAP\DateFormat;
+use Gadget\Ldap\DateFormat;
 use Gsu\Biprod\Entity\SSOUser;
 
 /**

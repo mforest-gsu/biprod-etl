@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Gsu\Biprod\Command;
 
 use Gadget\Console\Command\Command;
-use Gadget\LDAP\Connection;
-use Gadget\LDAP\Query;
+use Gadget\Ldap\Connection;
+use Gadget\Ldap\Query;
 use Gsu\Biprod\Entity\SSOUser;
 use Gsu\Biprod\Factory\SSOUserFactory;
 use Symfony\Component\Console\Attribute\AsCommand;
