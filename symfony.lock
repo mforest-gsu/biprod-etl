@@ -1,21 +1,21 @@
 {
-    "mjfk23/gadget-console": {
-        "version": "v1.0.6"
+    "mjfk23/gadget-cache": {
+        "version": "v2.0.0"
     },
-    "mjfk23/gadget-core": {
-        "version": "v1.0.4"
+    "mjfk23/gadget-console": {
+        "version": "v2.0.0"
     },
     "mjfk23/gadget-http": {
-        "version": "v1.0.7"
+        "version": "v2.0.0"
     },
     "mjfk23/gadget-ldap": {
-        "version": "v1.0.1"
+        "version": "v2.0.0"
     },
     "mjfk23/gadget-log": {
-        "version": "v1.0.2"
+        "version": "v2.0.0"
     },
     "mjfk23/gadget-oracle": {
-        "version": "v1.0.2"
+        "version": "v2.0.0"
     },
     "php-http/discovery": {
         "version": "1.20",
@@ -30,15 +30,15 @@
         ]
     },
     "phpstan/phpstan": {
-        "version": "1.12",
+        "version": "2.0",
         "recipe": {
             "repo": "github.com/mjfk23/symfony-recipes",
             "branch": "main",
-            "version": "1.0",
-            "ref": "0da691b26c3a2ea2c0c6350cebfe3e0765cd6fdc"
+            "version": "2.0",
+            "ref": "255632cd5d847606353fd31d7b272e2a6ff28880"
         },
         "files": [
-            "phpstan.neon.dist"
+            "phpstan.neon"
         ]
     },
     "squizlabs/php_codesniffer": {
@@ -46,11 +46,11 @@
         "recipe": {
             "repo": "github.com/mjfk23/symfony-recipes",
             "branch": "main",
-            "version": "3.6",
-            "ref": "8ab46c3495b0fcdfed304ba11f2fa4f3f89a98f3"
+            "version": "3.10",
+            "ref": "a59bf2e843015e73ca3abe5e96cbe9c6add3ea85"
         },
         "files": [
-            "phpcs.xml.dist"
+            "phpcs.xml"
         ]
     },
     "symfony/console": {
@@ -70,11 +70,12 @@
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "1.0",
-            "ref": "146251ae39e06a95be0fe3d13c807bcf3938b172"
+            "version": "2.4",
+            "ref": "52e9754527a15e2b79d9a610f98185a1fe46622a"
         },
         "files": [
-            ".env"
+            ".env",
+            ".env.dev"
         ]
     },
     "symfony/framework-bundle": {

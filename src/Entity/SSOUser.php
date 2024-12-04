@@ -4,8 +4,36 @@ declare(strict_types=1);
 
 namespace Gsu\Biprod\Entity;
 
+use Gadget\Io\Cast;
+use Gadget\Ldap\DateFormat;
+
 final class SSOUser
 {
+    /**
+     * @param mixed $values
+     * @return self
+     */
+    public static function create(mixed $values): self
+    {
+        $values = Cast::toArray($values);
+        $memberOf = Cast::toString($values['memberOf'] ?? '');
+        return new self(
+            campusId: Cast::toString($values['sAMAccountName'] ?? ''),
+            emailAddress: Cast::toString($values['mail'] ?? ''),
+            firstName: Cast::toString($values['givenName'] ?? ''),
+            lastName: Cast::toString($values['sn'] ?? ''),
+            affiliations: array_keys(array_filter(
+                SSOUser::$AFFILIATIONS,
+                fn(string $group): bool => str_contains($memberOf, $group)
+            )),
+            accountStatus: Cast::toInt($values['userAccountControl'] ?? 0),
+            createDate: DateFormat::formatUTCTimestamp(Cast::toInt($values['whenCreated'] ?? 0)),
+            updateDate: DateFormat::formatUTCTimestamp(Cast::toInt($values['whenChanged'] ?? 0)),
+            pwdLastSet: DateFormat::formatTimeInterval(Cast::toInt($values['pwdLastSet'] ?? 0))
+        );
+    }
+
+
     /** @var array<string,string> $AFFILIATIONS */
     public static array $AFFILIATIONS = [
         'Faculty' => 'CN=EG-AFF-Faculty,OU=Groups,OU=Org,DC=gsuad,DC=gsu,DC=edu',
