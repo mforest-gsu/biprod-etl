@@ -17,6 +17,9 @@
     "mjfk23/gadget-oracle": {
         "version": "v2.0.0"
     },
+    "mjfk23/gadget-process": {
+        "version": "v1.0.2"
+    },
     "php-http/discovery": {
         "version": "1.20",
         "recipe": {

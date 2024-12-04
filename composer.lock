@@ -507,16 +507,16 @@
         },
         {
             "name": "mjfk23/gadget-console",
-            "version": "v2.0.0",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mjfk23/gadget-console.git",
-                "reference": "8fc7b9533a8a7b24705b7dc3c20f09032371dbb4"
+                "reference": "e1f0d9ad61e37641e37eb419dda22c0cf5765814"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mjfk23/gadget-console/zipball/8fc7b9533a8a7b24705b7dc3c20f09032371dbb4",
-                "reference": "8fc7b9533a8a7b24705b7dc3c20f09032371dbb4",
+                "url": "https://api.github.com/repos/mjfk23/gadget-console/zipball/e1f0d9ad61e37641e37eb419dda22c0cf5765814",
+                "reference": "e1f0d9ad61e37641e37eb419dda22c0cf5765814",
                 "shasum": ""
             },
             "require": {
@@ -559,7 +559,7 @@
                 "source": "https://github.com/mjfk23/gadget-console",
                 "wiki": "https://github.com/mjfk23/gadget-console/wiki"
             },
-            "time": "2024-12-03T16:47:02+00:00"
+            "time": "2024-12-04T19:32:58+00:00"
         },
         {
             "name": "mjfk23/gadget-core",
@@ -784,16 +784,16 @@
         },
         {
             "name": "mjfk23/gadget-oracle",
-            "version": "v2.0.0",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mjfk23/gadget-oracle.git",
-                "reference": "055aaee403dc17bab92d82446af611fcc66b57e1"
+                "reference": "517dbb8b59fe31ea13a3c63bcaffa4723c8a901e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mjfk23/gadget-oracle/zipball/055aaee403dc17bab92d82446af611fcc66b57e1",
-                "reference": "055aaee403dc17bab92d82446af611fcc66b57e1",
+                "url": "https://api.github.com/repos/mjfk23/gadget-oracle/zipball/517dbb8b59fe31ea13a3c63bcaffa4723c8a901e",
+                "reference": "517dbb8b59fe31ea13a3c63bcaffa4723c8a901e",
                 "shasum": ""
             },
             "require": {
@@ -834,24 +834,25 @@
                 "source": "https://github.com/mjfk23/gadget-oracle",
                 "wiki": "https://github.com/mjfk23/gadget-oracle/wiki"
             },
-            "time": "2024-12-03T16:56:40+00:00"
+            "time": "2024-12-04T19:34:20+00:00"
         },
         {
             "name": "mjfk23/gadget-process",
-            "version": "v1.0.0",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mjfk23/gadget-process.git",
-                "reference": "28acd7807c8fcb68af12933a92bc16b78ced8105"
+                "reference": "e8c26bbe4e00defbb2fd6c46d379a5422a896076"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mjfk23/gadget-process/zipball/28acd7807c8fcb68af12933a92bc16b78ced8105",
-                "reference": "28acd7807c8fcb68af12933a92bc16b78ced8105",
+                "url": "https://api.github.com/repos/mjfk23/gadget-process/zipball/e8c26bbe4e00defbb2fd6c46d379a5422a896076",
+                "reference": "e8c26bbe4e00defbb2fd6c46d379a5422a896076",
                 "shasum": ""
             },
             "require": {
                 "mjfk23/gadget-core": "^2.0",
+                "mjfk23/symfony-bundle": "^1.0",
                 "php": "^8.1",
                 "symfony/process": "6.4.*"
             },
@@ -864,7 +865,10 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Gadget\\Process\\": "src/"
+                    "Gadget\\Process\\": [
+                        "src/",
+                        "bundle/"
+                    ]
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -884,7 +888,7 @@
                 "source": "https://github.com/mjfk23/gadget-process",
                 "wiki": "https://github.com/mjfk23/gadget-process/wiki"
             },
-            "time": "2024-12-03T16:25:36+00:00"
+            "time": "2024-12-04T19:31:46+00:00"
         },
         {
             "name": "mjfk23/psr-http-contracts",
