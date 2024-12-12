@@ -19,6 +19,7 @@ final class D2L extends Biprod
             'D2L_USER_ENROLLMENT.sql',
             'D2L_USER.sql',
             'D2L_OUTCOME_DETAIL.sql',
+            'D2L_OUTCOMES_ALIGNED_OBJECT.sql'
         ]);
     }
 }
