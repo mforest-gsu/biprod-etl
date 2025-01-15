@@ -8,9 +8,9 @@ services:
   PDO:
     class: \PDO
     arguments:
-      $dsn: "mysql:host=192.168.4.36;port=20001;charset=utf8mb4"
-      $username: "cetlo_user"
-      $password: "ChangeMe!589A"
+      $dsn: "%env(string:default::PDO_DSN)%"
+      $username: "%env(string:default::PDO_USERNAME)%"
+      $password: "%env(string:default::PDO_PASSWORD)%"
       $options:
         !php/const PDO::ATTR_ERRMODE: !php/const PDO::ERRMODE_EXCEPTION
         !php/const PDO::ATTR_DEFAULT_FETCH_MODE: !php/const PDO::FETCH_ASSOC
