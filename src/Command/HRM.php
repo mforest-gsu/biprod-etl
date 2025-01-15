@@ -8,7 +8,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 
 #[AsCommand('biprod:hrm')]
-final class SIS extends Biprod
+final class HRM extends Biprod
 {
     /** @inheritdoc */
     protected function getShellArgs(InputInterface $input): array
