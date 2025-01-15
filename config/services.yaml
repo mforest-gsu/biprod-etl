@@ -5,6 +5,17 @@ services:
     autowire: true
     autoconfigure: true
 
+  PDO:
+    class: \PDO
+    arguments:
+      $dsn: "mysql:host=192.168.4.36;port=20001;charset=utf8mb4"
+      $username: "cetlo_user"
+      $password: "ChangeMe!589A"
+      $options:
+        !php/const PDO::ATTR_ERRMODE: !php/const PDO::ERRMODE_EXCEPTION
+        !php/const PDO::ATTR_DEFAULT_FETCH_MODE: !php/const PDO::FETCH_ASSOC
+        !php/const PDO::ATTR_EMULATE_PREPARES: false
+
   Gsu\Biprod\:
     resource: "../src/"
     exclude:

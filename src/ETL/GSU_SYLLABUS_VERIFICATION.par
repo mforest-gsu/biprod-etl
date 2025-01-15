@@ -1,0 +1,7 @@
+direct=true
+control=./src/ETL/GSU_SYLLABUS_VERIFICATION.ctl
+log=./var/log/GSU_SYLLABUS_VERIFICATION.sqlldr.log
+bad=./var/log/GSU_SYLLABUS_VERIFICATION.sqlldr.bad.log
+discard=./var/log/GSU_SYLLABUS_VERIFICATION.sqlldr.discard.log
+errors=0
+silent=all
