@@ -28,9 +28,12 @@ USING
     WHERE
       EnrollmentWithdrawalMinMax.LogIdMax > (
         SELECT
-          MAX(EnrollmentSummary.LogIdMax)
+          NVL(MAX(EnrollmentSummary.LogIdMax), 0)
         FROM
           D2L_ENROLLMENT_SUMMARY EnrollmentSummary
+        WHERE
+          EnrollmentSummary.UserId = EnrollmentWithdrawalMinMax.UserId AND
+          EnrollmentSummary.OrgUnitId = EnrollmentWithdrawalMinMax.OrgUnitId
       ) AND
       OrgUnit.OrgUnitId = EnrollmentWithdrawalMinMax.OrgUnitId AND
       EnrollmentWithdrawalMin.LogId = EnrollmentWithdrawalMinMax.LogIdMin AND
