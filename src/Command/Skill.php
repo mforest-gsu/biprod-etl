@@ -17,6 +17,7 @@ final class Skill extends Biprod
             'SKILL_OWNER.sql',
             'SKILL_LEVEL.sql',
             'SKILL_DETAIL.sql',
+            'SKILL_ANCESTOR.sql',
             'SKILL_ASSESSMENT.sql',
         ]);
     }
