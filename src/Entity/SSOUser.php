@@ -98,7 +98,7 @@ final class SSOUser
             'SSOUSER_LAST_NAME'        => $this->lastName,
             'SSOUSER_ACCOUNT_STATUS'   => implode(',', array_keys($accountStatus)),
             'SSOUSER_ACCOUNT_DISABLED' => isset($accountStatus["ACCOUNTDISABLE"]) ? '1' : '0',
-            'SSOUSER_AFFILIATIONS'     => implode(',', $this->affiliations),
+            'SSOUSER_AFFILIATIONS'     => count($this->affiliations) > 0 ? implode(',', $this->affiliations) : 'None',
             'SSOUSER_IS_FACULTY'       => in_array("Faculty", $this->affiliations, true) ? '1' : '0',
             'SSOUSER_IS_STAFF'         => in_array("Staff", $this->affiliations, true) ? '1' : '0',
             'SSOUSER_IS_STUDENT'       => in_array("Student", $this->affiliations, true) ? '1' : '0',
