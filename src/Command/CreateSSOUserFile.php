@@ -40,13 +40,6 @@ final class CreateSSOUserFile extends Command
             '(&',
             '(objectClass=User)', // Is a User object
             '(userAccountControl:1.2.840.113556.1.4.803:=512)', // Is a normal account
-            '(|',
-            // Has at least one 'valid' affiliation membership
-            ...array_map(
-                fn(string $affiliation): string => "(memberOf={$affiliation})",
-                array_values(SSOUser::$AFFILIATIONS)
-            ),
-            ')',
             '(mail=*)', // Has an email address
             '(givenName=*)', // Has a first name
             '(sn=*)', // Has a last name
