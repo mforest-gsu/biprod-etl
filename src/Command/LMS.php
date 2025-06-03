@@ -16,6 +16,8 @@ final class LMS extends Biprod
         return array_map($this->shellCmd->sqlplus(...), [
             'LMSENRL.sql',
             'LMS_ICOLLEGE_RUBRIC_PROG.sql',
+            'ICOLLPRD_LMSENRL.sql',
+            'ICOLLPRD_LMS_ICOLLEGE_RUBRIC_PROG.sql',
         ]);
     }
 }
