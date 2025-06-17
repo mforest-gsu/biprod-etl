@@ -245,6 +245,38 @@ WHEN MATCHED THEN
     A.LastAccessed = B.LastAccessed
 ;
 
+MERGE INTO
+  MFOREST.D2L_USER_ENROLLMENT A
+USING
+  (
+    SELECT
+      UserEnrollment.UserId,
+      UserEnrollment.OrgUnitId,
+      MAX(CourseAccessLog.Timestamp) as LastAccessed
+    FROM
+      MFOREST.D2L_USER_ENROLLMENT UserEnrollment,
+      MFOREST.D2L_COURSE_ACCESS_LOG CourseAccessLog
+    WHERE
+      CourseAccessLog.UserId = UserEnrollment.UserId AND
+      CourseAccessLog.OrgUnitId = UserEnrollment.OrgUnitId AND
+      (
+        UserEnrollment.LastAccessed is null OR
+        CourseAccessLog.Timestamp > UserEnrollment.LastAccessed
+      )
+    GROUP BY
+      UserEnrollment.UserId,
+      UserEnrollment.OrgUnitId
+  ) B
+ON
+  (
+    A.UserId = B.UserId AND
+    A.OrgUnitId = B.OrgUnitId
+  )
+WHEN MATCHED THEN
+  UPDATE SET
+    A.LastAccessed = B.LastAccessed
+;
+
 COMMIT;
 
 QUIT;
